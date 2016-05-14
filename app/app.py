@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 
 # Flask instance
 app = Flask(__name__)
@@ -13,10 +13,11 @@ def hello():
 def home():
     # Checking flast request object for request type
     if request.method == 'POST':
-        value_one = int(request.form['number-one'])
-        value_two = int(request.form['number-two'])
+        value_one = int(request.form.get('first'))
+        value_two = int(request.form.get('second'))
         total = value_one + value_two
-        return render_template('index.html', value=total)
+        data = {"total": str(total)}
+        return jsonify(data)
     # GET request
     return render_template('index.html', string="TESTING!")
 
