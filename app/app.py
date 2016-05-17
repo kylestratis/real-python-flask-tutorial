@@ -31,8 +31,11 @@ def home():
         value_two = request.form.get('second')
         # api call
         url = 'https://api.github.com/search/users?q=location:{0}+language:{1}'.format(value_one, value_two)
-        response_dict = requests.get(url).json()
-        return jsonify(response_dict)
+        try:
+            response_dict = requests.get(url).json()
+            return jsonify(response_dict)
+        except:
+            return jsonify({"error", "error message"}), 500
     # GET request
     return render_template('index.html', string="TESTING!")
 
